@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+
+const program = require('commander')
+    , send = require('../lib/send')
+
+var recipient, subject, message
+
+program
+  .version('0.0.1')
+  .arguments('<recipient> <subject> <message>')
+  .option('-t, --test', "don't actually send the message")
+  .action(function(r, s, m) {
+    recipient = r
+    subject = s
+    message = m
+});
+
+program.parse(process.argv);
+
+if (typeof recipient === 'undefined' || !validateEmail(recipient)) {
+   console.error('Provide a recipient e-mail address, a subject, and a message!');
+   process.exit(1);
+}
+
+send(recipient, subject, message, program.test)
+
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}

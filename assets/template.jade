@@ -1,0 +1,21 @@
+head
+  style
+    include:less styles.less
+body
+.header
+  h1
+    |Sent with 
+    a(href="https://github.com/danielrob/mailer") mailer
+  p This e-mail was sent using node + mandrill + jade templating.
+  p The following message is sent to you by the sender. 
+.body
+  pre= message
+.footer
+  p I hope you liked the message!
+  p
+    |P.S. If you're developing HTML e-mails, you may find the following links useful 
+    a(href="http://www.leemunroe.com/building-html-email/") http://www.leemunroe.com/building-html-email/
+
+ul
+  each tag, index in tags
+    li= tag
